@@ -45,3 +45,6 @@ with open("test.txt", "w") as outfile:
     outfile.close()
 os.chdir("..")
 '''
+def createFolder(name){
+    path.exists(name)
+}
