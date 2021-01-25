@@ -16,37 +16,26 @@ arguments = sys.argv #รับค่า root มาแทน Default
 
 if(len(arguments)>1):
     root = arguments[1].replace('\\','/')
-root = root + '/'
-trainPath = root + folderTrain
-testPath = root + folderTest
+root = root
+trainPath = root +"/"+ folderTrain
+testPath = root +"/"+ folderTest
 
 print(root)
 
 def folderGen(dPath):
-    print(dPath)
-    
-    os.chdir(dPath)
-    
-    for folder in os.listdir(os.getcwd()):
-        print(folder)
-    '''
-    if os.path.isdir(folder): 
-        print(folder)
-
-        os.chdir(os.path.join(os.getcwd(), folder))
-        for filename in os.listdir(os.getcwd()):
-            if filename.endswith(".jpg"):
-                #print(folder+"/"+filename)
-                image_files.append("test"+"/"+folder+"/" + filename)    
+    #print(dPath)    
+    os.chdir(dPath)    
+    for fileName in os.listdir(os.getcwd()):
+        path = dPath +"/"+ fileName
+        print(path)
+        if os.path.isdir(path):
+            #print(">>>>")
+            folderGen(path)
+        else:
+            if fileName.endswith(".jpg"):
+                image_files.append(path)
+                
         os.chdir("..")
 
-    os.chdir("..")
-    with open("test.txt", "w") as outfile:
-        for image in image_files:
-            outfile.write(image)
-            outfile.write("\r\n")
-        outfile.close()
-    os.chdir("..")
-    '''
-
 folderGen(root)
+print(image_files)
