@@ -21,7 +21,7 @@ trainPath = root +"/"+ folderTrain
 testPath = root +"/"+ folderTest
 
 print(root)
-
+#------------------------------------------------------------------
 def folderGen(dPath):
     #print(dPath)    
     os.chdir(dPath)    
@@ -33,9 +33,21 @@ def folderGen(dPath):
             folderGen(path)
         else:
             if fileName.endswith(".jpg"):
-                image_files.append(path)
-                
+                image_files.append(path)                
         os.chdir("..")
+#------------------------------------------------------------------
+def writeTxt(fileName){
+    with open(fileName, "w") as outfile:
+        for image in image_files:
+            outfile.write(image)
+            outfile.write("\n")
+        outfile.close()
+    os.chdir("..")
+}
+#------------------------------------------------------------------
+folderGen(trainPath)
+writeTxt("train.txt")
 
-folderGen(root)
-print(image_files)
+folderGen(testPath)
+writeTxt("test.txt")
+#print(image_files)
