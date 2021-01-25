@@ -16,35 +16,42 @@ arguments = sys.argv #รับค่า root มาแทน Default
 
 if(len(arguments)>1):
     root = arguments[1].replace('\\','/')
-root = root + '/'
-trainPath = root + folderTrain
-testPath = root + folderTest
-
+#root = root
+trainPath = root +"/"+ folderTrain
+testPath = root +"/"+ folderTest
 
 print(root)
-os.chdir(root)
-
-#print("1st +++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-for folder in os.listdir(os.getcwd()):
-    #print("-------------------------------------------------------------")
-    print(folder)
-'''    if os.path.isdir(folder): 
-        os.chdir(os.path.join(os.getcwd(), folder))
-        for filename in os.listdir(os.getcwd()):
-            if filename.endswith(".jpg"):
-                #print(folder+"/"+filename)
-                image_files.append("test"+"/"+folder+"/" + filename)    
+#------------------------------------------------------------------
+def folderGen(dPath):
+    #print(dPath)
+    os.chdir(dPath)    
+    for fileName in os.listdir(os.getcwd()):
+        path = dPath +"/"+ fileName
+        #print(path)
+        if os.path.isdir(path):
+            #print(">>>>")
+            folderGen(path)
+        else:
+            if fileName.endswith(".jpg"):
+                image_files.append(path)                
         os.chdir("..")
-'''
-os.chdir("..")
-'''
-with open("test.txt", "w") as outfile:
-    for image in image_files:
-        outfile.write(image)
-        outfile.write("\r\n")
-    outfile.close()
-os.chdir("..")
-'''
-def createFolder(name){
-    path.exists(name)
-}
+#------------------------------------------------------------------
+def writeTxt(fileName):
+    with open(fileName, "w") as outfile:        
+        for image in image_files:
+            #print(image)
+            outfile.write(image)
+            outfile.write("\n")
+        outfile.close()
+    os.chdir("..")
+#------------------------------------------------------------------
+try:
+    folderGen(trainPath)
+    writeTxt(root+"/train.txt")
+
+    folderGen(testPath)
+    writeTxt(root+"/test.txt")
+except:
+  print("Something went wrong")
+finally:
+  print("Generated files finished")
