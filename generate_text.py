@@ -20,28 +20,33 @@ root = root + '/'
 trainPath = root + folderTrain
 testPath = root + folderTest
 
-
 print(root)
-os.chdir(root)
 
-#print("1st +++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-for folder in os.listdir(os.getcwd()):
-    #print("-------------------------------------------------------------")
-    print(folder)
-'''    if os.path.isdir(folder): 
+def folderGen(dPath):
+    print(dPath)
+    
+    os.chdir(dPath)
+    
+    for folder in os.listdir(os.getcwd()):
+        print(folder)
+    '''
+    if os.path.isdir(folder): 
+        print(folder)
+
         os.chdir(os.path.join(os.getcwd(), folder))
         for filename in os.listdir(os.getcwd()):
             if filename.endswith(".jpg"):
                 #print(folder+"/"+filename)
                 image_files.append("test"+"/"+folder+"/" + filename)    
         os.chdir("..")
-'''
-os.chdir("..")
-'''
-with open("test.txt", "w") as outfile:
-    for image in image_files:
-        outfile.write(image)
-        outfile.write("\r\n")
-    outfile.close()
-os.chdir("..")
-'''
+
+    os.chdir("..")
+    with open("test.txt", "w") as outfile:
+        for image in image_files:
+            outfile.write(image)
+            outfile.write("\r\n")
+        outfile.close()
+    os.chdir("..")
+    '''
+
+folderGen(root)
