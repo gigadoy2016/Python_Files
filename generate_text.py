@@ -23,11 +23,11 @@ testPath = root +"/"+ folderTest
 print(root)
 #------------------------------------------------------------------
 def folderGen(dPath):
-    #print(dPath)    
+    #print(dPath)
     os.chdir(dPath)    
     for fileName in os.listdir(os.getcwd()):
         path = dPath +"/"+ fileName
-        print(path)
+        #print(path)
         if os.path.isdir(path):
             #print(">>>>")
             folderGen(path)
@@ -36,18 +36,22 @@ def folderGen(dPath):
                 image_files.append(path)                
         os.chdir("..")
 #------------------------------------------------------------------
-def writeTxt(fileName){
-    with open(fileName, "w") as outfile:
+def writeTxt(fileName):
+    with open(fileName, "w") as outfile:        
         for image in image_files:
+            #print(image)
             outfile.write(image)
             outfile.write("\n")
         outfile.close()
     os.chdir("..")
-}
 #------------------------------------------------------------------
-folderGen(trainPath)
-writeTxt("train.txt")
+try:
+    folderGen(trainPath)
+    writeTxt("/train.txt")
 
-folderGen(testPath)
-writeTxt("test.txt")
-#print(image_files)
+    folderGen(testPath)
+    writeTxt("/test.txt")
+except:
+  print("Something went wrong")
+finally:
+  print("Generated files finished")
